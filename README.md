@@ -1,6 +1,6 @@
 # Structured products pricing on McDonald's stock
 
-Design and pricing of two structured products on McDonald's Corporation (MCD) stock: a partially principal protected note and an ATM digital, both maturing 16 January 2026. The underlying stock price and option quotes come from Yahoo Finance, and the products are priced with a CRR binomial tree and the Black-Scholes formula, written in R (with a supporting MATLAB exercise from the same coursework).
+Design and pricing of two structured products on McDonald's Corporation (MCD) stock: a partially principal protected note and an ATM digital, both maturing 16 January 2026. The underlying stock price and option quotes come from Yahoo Finance, and the products are priced with a CRR binomial tree and the Black-Scholes formula, written in R.
 
 Coursework project for Fundamentals of Financial Mathematics, Master of Actuarial and Financial Engineering, KU Leuven (2024). The full write-up is in [`report/Structured_Products_Pricing_Report.pdf`](report/Structured_Products_Pricing_Report.pdf).
 
@@ -27,13 +27,11 @@ The bonus multiplier m is set from the price of a digital (cash-or-nothing) call
 
 ## Method
 
-**Stock price distribution (Product 1).** `R/binomial_tree.R` builds a 4-step Cox-Ross-Rubinstein binomial tree for MCD over the life of the note and reads off the risk-neutral distribution of ST. `R/crr_tree.R` is an earlier version of the same tree: it uses the 9 December 2024 market snapshot and the 52-week US Treasury Bill rate quoted on a coupon-equivalent basis (4.19%), while the final report uses a 11 December 2024 snapshot and the bank-discount quote (4.04%). Both scripts are included as submitted; `binomial_tree.R` is the one whose numbers match the final report.
+**Stock price distribution (Product 1).** `R/binomial_tree.R` builds a 4-step Cox-Ross-Rubinstein binomial tree for MCD over the life of the note and reads off the risk-neutral distribution of ST.
 
 **Digital call price (Product 2).** `R/black_scholes_digital.R` prices the ATM digital call in closed form, discounting the risk-neutral probability that ST ends at or above the strike. The report cross-checks this against a market-based approximation: a narrow call spread around the strike, built from quoted MCD call prices at K=300 and K=305.
 
 **Collar and multiplier scenarios.** `data/structured_products_calculations.xlsx` (sheets Q1 and Q2) takes the tree distribution and the digital call price as inputs and works out, for each collar or multiplier choice, the expected investor payoff and the bank's profit margin.
-
-`matlab/exercises.m` and `matlab/exp_value.m` are introductory MATLAB warm-up exercises from the same course; they do not price either product.
 
 ## Results
 
@@ -71,15 +69,10 @@ Product 2, expected payoff and bank margin per multiplier (N = 100):
 
 ```
 R/
-  binomial_tree.R              CRR tree for Product 1, final version (matches the report)
-  crr_tree.R                   earlier version of the tree, different market snapshot and rate convention
+  binomial_tree.R              CRR tree for Product 1
   black_scholes_digital.R       closed-form price of the Product 2 digital call
-matlab/
-  exercises.m                  introductory MATLAB exercises (unrelated to the two products)
-  exp_value.m                  helper function used by exercises.m
 data/
   binomial_tree_result.xlsx     output of binomial_tree.R
-  crr_tree_result.xlsx          output of crr_tree.R
   structured_products_calculations.xlsx   collar/multiplier scenarios, expected payoffs and margins
 report/                        full project report (PDF)
 ```
@@ -90,12 +83,9 @@ Requires R with the `openxlsx` package.
 
 ```r
 source("R/binomial_tree.R")           # stock price distribution for Product 1
-source("R/crr_tree.R")                # earlier version, kept for reference
 source("R/black_scholes_digital.R")   # digital call price for Product 2
 ```
 
-Each script prints its results to the console and, for the two tree scripts, writes them to an xlsx file under `data/`. Run them from the repository root so the output paths resolve correctly.
+Each script prints its results to the console and the tree script also writes them to an xlsx file under `data/`. Run them from the repository root so the output paths resolve correctly.
 
-`matlab/exercises.m` and `matlab/exp_value.m` only use base MATLAB (matrix indexing, `rand`, `eye`, loops, `disp`) and need no toolbox. They were not run for this repository: MATLAB was not available in the packaging environment, so the files are included as submitted, cleaned up for formatting only.
-
-Market quotes (MCD spot price, option prices and implied volatility from Yahoo Finance, the Treasury Bill rate from home.treasury.gov) are entered directly in the R scripts and the Excel workbook, as of the dates stated above.
+Market quotes (MCD spot price, option prices and implied volatility from Yahoo Finance, the Treasury Bill rate from home.treasury.gov) are entered directly in the R scripts and the Excel workbook.
