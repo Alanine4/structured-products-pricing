@@ -2,7 +2,7 @@
 
 Design and pricing of two structured products on McDonald's Corporation (MCD) stock: a partially principal protected note and an ATM digital, both maturing 16 January 2026. The underlying stock price and option quotes come from Yahoo Finance, and the products are priced with a CRR binomial tree and the Black-Scholes formula, written in R.
 
-Coursework project for Fundamentals of Financial Mathematics, Master of Actuarial and Financial Engineering, KU Leuven (2024). The full write-up is in [`report/Structured_Products_Pricing_Report.pdf`](report/Structured_Products_Pricing_Report.pdf).
+The full write-up is in [`report/Structured_Products_Pricing_Report.pdf`](report/Structured_Products_Pricing_Report.pdf).
 
 ## The products
 
